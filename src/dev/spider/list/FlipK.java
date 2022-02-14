@@ -6,34 +6,33 @@ import java.util.Deque;
 public class FlipK {
     public static void main(String[] args) {
         ListNode head = ListNode.singleInit();
-        flipKInList(head, 3);
+        ListNode listNode = flipK(head, 3);
+        ListNode.printList(listNode);
     }
 
-    public static void flipKInList(ListNode head, int k) {
-        Deque<ListNode> queue = new ArrayDeque<>();
-        int count = 0;
-        ListNode newHead = new ListNode(-1);
+    public static ListNode flipK(ListNode head, int k) {
+        Deque<ListNode> stack = new ArrayDeque<ListNode>();
+        ListNode dummy = new ListNode(0);
+        ListNode p = dummy;
         while (true) {
-            ListNode guard = head;
-            //flip unit
-            while (guard.getNext() != null && count < k) {
-                queue.add(guard);
-                guard = guard.getNext();
+            int count = 0;
+            ListNode tmp = head;
+            while (tmp != null && count < k) {
+                stack.add(tmp);
+                tmp = tmp.getNext();
                 count++;
             }
-            //less
             if (count != k) {
-                newHead.setNext(head);
+                p.setNext(head);
                 break;
             }
-
-            while (!queue.isEmpty()) {
-                newHead.setNext(queue.pollLast());
-                newHead = newHead.getNext();
+            while (!stack.isEmpty()) {
+                p.setNext(stack.pollLast());
+                p = p.getNext();
             }
-            newHead.setNext(guard);
-            head = guard;
+            p.setNext(tmp);
+            head = tmp;
         }
-        ListNode.printList(newHead.getNext());
+        return dummy.getNext();
     }
 }
