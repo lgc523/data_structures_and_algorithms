@@ -1,9 +1,9 @@
 package dev.spider.list;
 
 public class ListNode {
-    private int v;
-    private ListNode next;
-    private ListNode pre;
+    int v;
+    ListNode next;
+    ListNode pre;
 
     public int getV() {
         return v;
