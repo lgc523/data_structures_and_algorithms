@@ -1,5 +1,7 @@
 package dev.spider.list;
 
+import org.w3c.dom.Node;
+
 public class ListNode {
     int v;
     ListNode next;
@@ -31,6 +33,9 @@ public class ListNode {
 
     public ListNode(int v) {
         this.v = v;
+    }
+
+    public ListNode() {
     }
 
     public ListNode(int v, ListNode next, ListNode pre) {
@@ -67,15 +72,44 @@ public class ListNode {
         if (head == null) {
             return;
         }
-        String out = "" + head.getV();
+        StringBuilder out = new StringBuilder("" + head.getV());
         while (head.next != null) {
             ListNode cur = head.next;
-            out += "->" + cur.getV();
+            out.append("->").append(cur.getV());
             head = cur;
         }
-        out += "->nil.";
+        out.append("->nil.");
         System.out.println("current list is: " + out);
+    }
 
+    public static void printLoopList(ListNode head) {
+        if (head == null) {
+            return;
+        }
+        ListNode flag = head;
+        StringBuilder out = new StringBuilder("" + head.getV());
+        while (head.next != null && head.next != flag) {
+            ListNode cur = head.next;
+            out.append("->").append(cur.getV());
+            head = cur;
+        }
+        out.append("«");
+        System.out.println("current list is: " + out);
+    }
 
+    public static ListNode generateLoopList() {
+
+        ListNode head = new ListNode(1);
+        ListNode x = head;
+
+        //建立单向链表
+        for (int i = 2; i <= 5; i++) {
+            x = (x.next = new ListNode(i));
+        }
+
+        //最后一个节点的next指向第一个节点，形成循环链表
+        x.next = head;
+        printLoopList(head);
+        return head;
     }
 }
